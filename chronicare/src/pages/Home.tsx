@@ -25,7 +25,6 @@ const Home: React.FC = () => {
       <nav className="relative z-20 w-full flex items-center justify-between px-6 md:px-[120px] py-[16px] bg-transparent">
         {/* Logo */}
         <div className="flex items-center gap-2">
-          <span className="text-xl">❤️🩹</span>
           <span className="text-white font-bold text-[20px]">PRANA</span>
         </div>
 
@@ -36,7 +35,7 @@ const Home: React.FC = () => {
             <Link to="/dashboard" className="text-white font-medium text-[14px]">Dashboard</Link>
             <ChevronDown className="text-white w-4 h-4 opacity-80 group-hover:opacity-100 transition-opacity" />
           </div>
-          <Link to="#how-it-works" className="text-white font-medium text-[14px] hover:opacity-80 transition-opacity">How It Works</Link>
+          <Link to="/scheduler" className="text-white font-medium text-[14px] hover:opacity-80 transition-opacity">Scheduler</Link>
           <Link to="#about" className="text-white font-medium text-[14px] hover:opacity-80 transition-opacity">About</Link>
         </div>
 
@@ -64,7 +63,6 @@ const Home: React.FC = () => {
         <div className="fixed inset-0 z-50 bg-black flex flex-col p-6">
           <div className="flex justify-between items-center mb-12">
             <div className="flex items-center gap-2">
-              <span className="text-xl">❤️🩹</span>
               <span className="text-white font-bold text-[20px]">PRANA</span>
             </div>
             <button className="text-white" onClick={() => setMobileMenuOpen(false)}>
@@ -74,7 +72,7 @@ const Home: React.FC = () => {
           <div className="flex flex-col gap-6">
             <Link to="/" className="text-white text-xl font-medium" onClick={() => setMobileMenuOpen(false)}>Home</Link>
             <Link to="/dashboard" className="text-white text-xl font-medium" onClick={() => setMobileMenuOpen(false)}>Dashboard</Link>
-            <Link to="#how-it-works" className="text-white text-xl font-medium" onClick={() => setMobileMenuOpen(false)}>How It Works</Link>
+            <Link to="/scheduler" className="text-white text-xl font-medium" onClick={() => setMobileMenuOpen(false)}>Scheduler</Link>
             <Link to="#about" className="text-white text-xl font-medium" onClick={() => setMobileMenuOpen(false)}>About</Link>
             <div className="h-px bg-white/20 my-4" />
             <button className="bg-white text-black font-semibold text-lg py-3 rounded-lg w-full">Sign In</button>

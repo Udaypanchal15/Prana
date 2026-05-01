@@ -5,7 +5,12 @@ passlib[bcrypt]
 python-multipart
 pydantic>=2.10.0
 python-dotenv>=1.0.0
+email-validator
+pandas
+scikit-learn
+numpy
+requests
+twilio
 
 # Optional: For notifications
-# twilio>=8.0.0
 # firebase-admin>=6.0.0
