@@ -97,7 +97,7 @@ const Dashboard: React.FC = () => {
   const [modalState, setModalState] = useState<'sending' | 'notified'>('sending');
   const [toasts, setToasts] = useState<{ id: number, message: string, icon: React.ReactNode }[]>([]);
   
-  const deterioratingInterval = useRef<NodeJS.Timeout | null>(null);
+  const deterioratingInterval = useRef<ReturnType<typeof setTimeout> | null>(null);
   const isTransitioning = useRef(false);
   
   // Calculate risk score based on vitals
