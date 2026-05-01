@@ -10,7 +10,17 @@ pandas
 scikit-learn
 numpy
 requests
+fastapi>=0.115.0
+uvicorn>=0.32.0
+python-jose[cryptography]
+passlib[bcrypt]
+python-multipart
+pydantic>=2.10.0
+python-dotenv>=1.0.0
+email-validator
+pandas
+scikit-learn
+numpy
+requests
 twilio
-
-# Optional: For notifications
-# firebase-admin>=6.0.0
+joblib
