@@ -4,10 +4,21 @@ import requests
 from fastapi.middleware.cors import CORSMiddleware
 import os
 from dotenv import load_dotenv
+from pydantic import BaseModel
+import joblib
+import numpy as np
 
 load_dotenv()
 
 app = FastAPI(title="ChroniCare Backend")
+
+# Load ML Model
+try:
+    model_path = os.path.join(os.path.dirname(__file__), "..", "heart_failure_model.pkl")
+    model = joblib.load(model_path)
+except Exception as e:
+    print(f"Error loading model: {e}")
+    model = None
 
 # Configure CORS
 app.add_middleware(
@@ -127,3 +138,64 @@ async def medicine_call(request: Request):
     )
     
     return {"status": "reminder_call_sent", "call_sid": call.sid}
+
+# --- ML Prediction Endpoint ---
+class HeartFailureInput(BaseModel):
+    age: float
+    anaemia: int
+    creatinine_phosphokinase: float
+    diabetes: int
+    ejection_fraction: float
+    high_blood_pressure: int
+    platelets: float
+    serum_creatinine: float
+    serum_sodium: float
+    sex: int
+    smoking: int
+    time: float
+
+@app.post("/predict")
+async def predict_heart_failure(data: HeartFailureInput):
+    if model is None:
+        return {"error": "Model not loaded properly on the server."}
+        
+    # Prepare features in exact order
+    features = np.array([
+        data.age,
+        data.anaemia,
+        data.creatinine_phosphokinase,
+        data.diabetes,
+        data.ejection_fraction,
+        data.high_blood_pressure,
+        data.platelets,
+        data.serum_creatinine,
+        data.serum_sodium,
+        data.sex,
+        data.smoking,
+        data.time
+    ])
+    
+    # Scale features using provided StandardScaler parameters
+    means = np.array([6.10725272e+01, 4.47698745e-01, 6.02790795e+02, 4.47698745e-01,
+                      3.78870293e+01, 3.72384937e-01, 2.63670546e+05, 1.39171548e+00,
+                      1.36527197e+02, 6.40167364e-01, 3.17991632e-01, 1.27217573e+02])
+    stds = np.array([1.14198983e+01, 4.97257055e-01, 1.01024275e+03, 4.97257055e-01,
+                     1.19696181e+01, 4.83440168e-01, 9.92021416e+04, 1.08677904e+00,
+                     4.41638885e+00, 4.79951154e-01, 4.65696203e-01, 7.74132714e+01])
+    
+    scaled_features = (features - means) / stds
+    scaled_features = scaled_features.reshape(1, -1)
+    
+    # Predict probabilities
+    probability = float(model.predict_proba(scaled_features)[0][1])
+    
+    # Calculate risk score (0-100)
+    risk_score = round(probability * 100, 2)
+    
+    status = "SURVIVE" if probability < 0.5 else "DETERIORATE"
+    
+    return {
+        "probability": probability,
+        "risk_score": risk_score,
+        "prediction": status
+    }

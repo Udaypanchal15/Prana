@@ -36,6 +36,7 @@ const Home: React.FC = () => {
             <ChevronDown className="text-white w-4 h-4 opacity-80 group-hover:opacity-100 transition-opacity" />
           </div>
           <Link to="/scheduler" className="text-white font-medium text-[14px] hover:opacity-80 transition-opacity">Scheduler</Link>
+          <Link to="/predict" className="text-white font-medium text-[14px] hover:opacity-80 transition-opacity">Predict</Link>
           <Link to="#about" className="text-white font-medium text-[14px] hover:opacity-80 transition-opacity">About</Link>
         </div>
 
@@ -73,6 +74,7 @@ const Home: React.FC = () => {
             <Link to="/" className="text-white text-xl font-medium" onClick={() => setMobileMenuOpen(false)}>Home</Link>
             <Link to="/dashboard" className="text-white text-xl font-medium" onClick={() => setMobileMenuOpen(false)}>Dashboard</Link>
             <Link to="/scheduler" className="text-white text-xl font-medium" onClick={() => setMobileMenuOpen(false)}>Scheduler</Link>
+            <Link to="/predict" className="text-white text-xl font-medium" onClick={() => setMobileMenuOpen(false)}>Predict</Link>
             <Link to="#about" className="text-white text-xl font-medium" onClick={() => setMobileMenuOpen(false)}>About</Link>
             <div className="h-px bg-white/20 my-4" />
             <button className="bg-white text-black font-semibold text-lg py-3 rounded-lg w-full">Sign In</button>
